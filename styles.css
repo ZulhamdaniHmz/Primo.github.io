@@ -11,7 +11,7 @@
     body {
       font-family: 'Inter', sans-serif;
       line-height: 1.6;
-      background-color: #f9f9f9;
+      background-color: #949393;
       color: #333;
       display: flex;
       flex-direction: column;
@@ -47,6 +47,16 @@
       font-family: 'norwester' ,  sans-serif;
     }
 
+    /* ===== HAMBURGER MENU ===== */
+    .hamburger {
+      display: none;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+    }
+
+
+
     nav ul {
       display: flex;
       gap: 1.5rem;
@@ -69,7 +79,7 @@
       justify-content: center;
       align-items: center;
       padding: 4rem 2rem;
-      background: url('https://images.unsplash.com/photo-1602810313326-cd4f5c62a085?auto=format&fit=crop&w=1500&q=80') center/cover no-repeat;
+      background: url('primo.png') center/cover no-repeat;
       color: white;
       text-align: center;
     }
@@ -376,3 +386,89 @@ nav a.active {
   color: #ff4d4d;
   font-weight: bold;
 }
+
+
+* Mobile Menu Hidden By Default */
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  transition: max-height 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  /* Hide regular menu on mobile */
+  nav ul {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    width: 100%;
+    background: #111;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    max-height: 0;
+    padding: 0;
+  }
+
+  nav ul.show {
+    max-height: 300px; /* expanded height */
+    padding: 1rem 0;
+  }
+
+  nav ul li {
+    padding: 0.8rem 0;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
+
+/* ===== TABLET STYLING (769px - 1024px) ===== */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+
+  .footer-container {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+/* ===== PHONE STYLING (Up to 768px) ===== */
+@media (max-width: 768px) {
+  /* Hero section */
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+    max-width: 90%;
+  }
+
+  /* Product grid single-column if very small */
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    padding: 0.5rem;
+  }
+
+  /* Footer */
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-section {
+    margin-bottom: 1.5rem;
+  }
+}
+
+
