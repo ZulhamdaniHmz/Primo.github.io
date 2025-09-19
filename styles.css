@@ -1,3 +1,71 @@
+/* Cart icon and badge alignment */
+.cart-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+}
+#cartCount {
+  position: absolute;
+  top: -8px;
+  left: 22px;
+  background: #ff4d4d;
+  color: #fff;
+  border-radius: 50%;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  border: 2px solid #fff;
+  z-index: 1002;
+}
+@media (max-width: 600px) {
+  #cartItems li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5em;
+    padding: 0.7em 0;
+  }
+  #cartItems li img {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 0.3em;
+  }
+  #cartItems li .item-meta {
+    font-size: 1rem;
+    margin-bottom: 0.3em;
+    word-break: break-word;
+  }
+  #cartItems li .item-actions {
+    flex-direction: row;
+    gap: 0.3em;
+    width: 100%;
+  }
+  #cartItems li button {
+    min-width: 36px;
+    min-height: 36px;
+    font-size: 1.1em;
+    border-radius: 6px;
+  }
+  #cartCount {
+    left: 18px;
+    top: -6px;
+    min-width: 18px;
+    height: 18px;
+    font-size: 0.9rem;
+    padding: 0 3px;
+  }
+}
+  button:focus, .add-to-cart:focus, .hero button:focus, nav a:focus {
+  outline: 2px solid #ff4d4d;
+  outline-offset: 2px;
+}
+  
   * {
       margin: 0;
       padding: 0;
@@ -23,15 +91,23 @@
     }
 
     header {
-      background-color: #111;
-      color: white;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+          background-color: #111;
+          color: white;
+          padding: 1rem 2rem;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          z-index: 1000;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        }
+
+    /* Ensure main content sits below fixed header */
+    main {
+      margin-top: 72px; /* increased for design page, matches header height */
     }
 
     @font-face {
@@ -48,11 +124,35 @@
     }
 
     /* ===== HAMBURGER MENU ===== */
+
     .hamburger {
       display: none;
       font-size: 2rem;
       color: white;
       cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        gap: 1rem;
+        background: #111;
+        position: absolute;
+        top: 72px;
+        right: 0;
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        padding: 0;
+        transition: max-height 0.3s ease;
+      }
+      nav ul.show {
+        max-height: 300px;
+        padding: 1rem 0;
+      }
+      .hamburger {
+        display: block;
+      }
     }
 
 
@@ -72,6 +172,12 @@
     nav a:hover {
       color: #ff4d4d;
     }
+  
+  nav a.active {
+    color: #ff4d4d;
+    background: rgba(255,77,77,0.08);
+    font-weight: bold;
+  }
 
     .hero {
       display: flex;
@@ -82,10 +188,21 @@
       background: url('primo.png') center/cover no-repeat;
       color: white;
       text-align: center;
+  
+  button {
+    padding: 0.75rem 1.5rem;
+    transition: background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
     }
 
     .hero h1 {
       font-size: 3rem;
+  
+  button:hover, button:focus-visible {
+    outline: 2px solid #ff4d4d;
+    outline-offset: 2px;
+  }
       margin-bottom: 1rem;
     }
 
@@ -132,39 +249,44 @@
     }
 
     .designer {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
     }
 
     .tshirt-preview {
-      position: relative;
-      overflow: hidden;
-      width: 300px;
-      height: auto;
-      cursor: default;
+  position: relative;
+  overflow: hidden;
+  width: 300px;
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
     }
 
     .tshirt-image {
-      width: 100%;
-      display: block;
-      cursor: default;
-      pointer-events: none;
+  width: 200px;
+  display: block;
+  margin: 0 auto;
+  cursor: default;
+  pointer-events: none;
     }
 
     .uploaded-image {
-      position: absolute;
-      top: 35%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      max-width: 150px;
-      max-height: 150px;
-      z-index: 2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 120px;
+  max-height: 120px;
+  z-index: 2;
       cursor: move;
       touch-action: none;
       display: none;
-      cursor: move;
+      
     }
 
     .controls {
@@ -208,6 +330,17 @@
       padding: 2rem 1rem 1rem;
       margin-top: 2rem;
       font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
     }
 
     .footer-container {
@@ -329,13 +462,107 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   padding: 1rem;
   text-align: center;
-  width: 180px; /* uniform width */
-  height: 280px; /* uniform height */
+  width: 240px;
+  min-height: 280px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
+  word-break: break-word;
+  white-space: normal;
+}
+
+.product-card h3 {
+  font-size: 1.05rem;
+  margin: 0.5rem 0;
+  word-break: break-word;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+  line-height: 1.2;
+  min-height: 2.4em;
+  display: block;
+}
+
+/* Cart preview styles */
+#cartPreview {
+  background: #fff;
+  color: #222;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  border-radius: 12px;
+  min-width: 260px;
+  max-width: 90vw;
+  z-index: 2001;
+  padding: 1.2rem 1rem 1rem 1rem;
+  position: fixed;
+  top: 80px;
+  right: 24px;
+  font-size: 1rem;
+  max-height: 60vh;
+  overflow-y: auto;
+  border: 2px solid #ff4d4d;
+  display: none;
+  transition: box-shadow 0.2s, top 0.2s;
+}
+
+@media (max-width: 600px) {
+  #cartPreview {
+    top: 70px;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translateX(-50%);
+    min-width: 0;
+    width: 92vw;
+    max-width: 340px;
+    border-radius: 18px;
+    padding: 1.1rem 0.7rem 1rem 0.7rem;
+    font-size: 1rem;
+    max-height: 70vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+    border: 2px solid #ff4d4d;
+    z-index: 3000;
+    margin: 0 auto;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+#cartPreview h4 {
+  margin-top: 0;
+  color: #ff4d4d;
+  font-size: 1.1rem;
+}
+#cartItems {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0.5rem 0;
+}
+#cartItems li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.3em 0;
+  border-bottom: 1px solid #eee;
+}
+.remove-cart-item {
+  background: #ff4d4d;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.2em 0.7em;
+  font-size: 0.95em;
+  cursor: pointer;
+  margin-left: 0.5em;
+  transition: background 0.2s;
+}
+.remove-cart-item:hover {
+  background: #e60000;
 }
 
 
@@ -400,7 +627,7 @@ nav a.active {
   /* Hide regular menu on mobile */
   nav ul {
     position: absolute;
-    top: 70px;
+    top: 72px; /* account for fixed header height */
     right: 0;
     width: 100%;
     background: #111;
@@ -454,10 +681,19 @@ nav a.active {
     max-width: 90%;
   }
 
-  /* Product grid single-column if very small */
+  /* Product grid single-column and centered on small screens */
   .product-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: 1fr;
+    justify-items: center;
     padding: 0.5rem;
+    gap: 1rem;
+  }
+
+  .product-card {
+    width: 100%;
+    max-width: 340px; /* keeps cards narrow and centered on phones */
+    margin: 0 auto;
+    height: auto;
   }
 
   /* Footer */

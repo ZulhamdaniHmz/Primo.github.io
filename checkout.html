@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | PrimoCustoms.BN</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+  <a href="index.html" class="logo" style="text-decoration:none;color:inherit;cursor:pointer;">PRIMOCUSTOMS.BN</a>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="design.html">Custom Design</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main style="margin-top:80px;max-width:480px;margin-left:auto;margin-right:auto;padding:1.5rem;">
+    <section style="background:#fff;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,0.10);padding:2rem 1.5rem;max-width:420px;margin:auto;">
+      <h1 style="color:#ff4d4d;text-align:center;margin-bottom:1.2rem;">Checkout</h1>
+      <div id="checkoutCart" style="margin-bottom:2rem;"></div>
+      <form id="checkoutForm" style="margin-top:0.5rem;display:flex;flex-direction:column;gap:1.2rem;">
+        <h3 style="margin-bottom:0.5rem;color:#222;">Contact & Shipping Info</h3>
+        <label style="font-weight:500;color:#444;">Name:<br><input type="text" name="name" required style="width:100%;padding:0.6em;border-radius:6px;border:1px solid #ccc;margin-top:0.3em;"></label>
+        <label style="font-weight:500;color:#444;">Email:<br><input type="email" name="email" required style="width:100%;padding:0.6em;border-radius:6px;border:1px solid #ccc;margin-top:0.3em;"></label>
+        <label style="font-weight:500;color:#444;">Address:<br><textarea name="address" required rows="3" style="width:100%;padding:0.6em;border-radius:6px;border:1px solid #ccc;margin-top:0.3em;"></textarea></label>
+        <button type="submit" style="background:#ff4d4d;color:#fff;padding:0.9em 1.5em;border:none;border-radius:8px;font-weight:bold;font-size:1.1em;box-shadow:0 2px 8px rgba(0,0,0,0.07);margin-top:0.5em;">Place Order</button>
+      </form>
+      <div id="orderSuccess" style="display:none;margin-top:2rem;color:green;font-weight:bold;text-align:center;">Thank you! Your order has been placed.</div>
+    </section>
+  </main>
+  <script src="scripts.js"></script>
+  <script>
+    // Render cart items from localStorage
+    function renderCheckoutCart() {
+      var cartDiv = document.getElementById('checkoutCart');
+      var cart = JSON.parse(localStorage.getItem('cart')||'[]');
+      if (!cart.length) {
+        cartDiv.innerHTML = '<p>Your cart is empty.</p>';
+        return;
+      }
+      var html = '<h3>Your Items</h3><ul style="list-style:none;padding:0;margin:0;">';
+      var total = 0;
+      cart.forEach(function(item) {
+        var price = item.name.includes('Kuuga') ? 19.99 : 24.99;
+        html += `<li style='display:flex;align-items:center;gap:0.7em;margin-bottom:0.7em;'>` +
+          `<img src='${item.img}' alt='${item.name}' style='width:38px;height:38px;object-fit:cover;border-radius:6px;'>` +
+          `<span style='flex:1;'>${item.name} (${item.size}) x ${item.qty||1}</span>` +
+          `<span style='font-weight:bold;'>$${(price*(item.qty||1)).toFixed(2)}</span></li>`;
+        total += price * (item.qty||1);
+      });
+      html += `</ul><div style='text-align:right;font-weight:bold;margin-top:0.7em;'>Total: $${total.toFixed(2)}</div>`;
+      cartDiv.innerHTML = html;
+    }
+    renderCheckoutCart();
+    // Handle order submit
+    document.getElementById('checkoutForm').onsubmit = function(e) {
+      e.preventDefault();
+      document.getElementById('orderSuccess').style.display = 'block';
+      localStorage.removeItem('cart');
+      renderCheckoutCart();
+    };
+  </script>
+</body>
+</html>

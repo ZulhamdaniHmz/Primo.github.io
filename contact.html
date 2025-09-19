@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Contact | PrimoCustoms.BN</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,14 +11,14 @@
   <a href="index.html" class="logo" style="text-decoration:none;color:inherit;cursor:pointer;">PRIMOCUSTOMS.BN</a>
     <nav>
       <ul>
-        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="index.html">Home</a></li>
         <li><a href="shop.html">Shop</a></li>
         <li><a href="design.html">Custom Design</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
       </ul>
     </nav>
-    <div class="cart" style="margin-left:1.5rem;display:flex;align-items:center;gap:0.5rem;position:relative;">
-      <span id="cartCount" style="background:#ff4d4d;color:#fff;padding:0.2em 0.7em;border-radius:16px;font-weight:bold;">0</span>
+    <div class="cart-container">
+      <span id="cartCount">0</span>
       <img src="icons/cart.png" alt="Cart" style="width:28px;height:28px;filter:brightness(0) invert(1);cursor:pointer;" onclick="toggleCartPreview()">
       <div id="cartPreview" style="display:none;position:absolute;top:36px;right:0;background:#fff;color:#222;box-shadow:0 4px 16px rgba(0,0,0,0.12);border-radius:8px;min-width:240px;z-index:999;padding:1rem;">
         <h4 style="margin-top:0;color:#ff4d4d;">Cart Items</h4>
@@ -30,24 +30,18 @@
   </header>
 
   <main>
-    <section class="hero">
-      <h1>Custom T-Shirts Made Easy</h1>
-      <p>Create your own design or choose from our exclusive collection. High-quality prints on premium fabric, delivered fast.</p>
-      <button onclick="location.href='design.html'">Start Designing</button>
-    </section>
-
-    <section class="features">
-      <div class="feature">
-        <h3>Upload Your Design</h3>
-        <p>Got a cool idea or logo? Upload it and see it come to life on a shirt.</p>
-      </div>
-      <div class="feature">
-        <h3>Choose Your Style</h3>
-        <p>Select from various shirt types, colors, and sizes to suit your look.</p>
-      </div>
-      <div class="feature">
-        <h3>Fast & Reliable Shipping</h3>
-        <p>We deliver your custom shirt in just a few days, anywhere in the country.</p>
+    <section class="contact-section" style="max-width:500px;margin:3rem auto;background:#fff;border-radius:var(--radius,8px);box-shadow:0 4px 16px rgba(0,0,0,0.08);padding:2rem;text-align:center;">
+      <h2 style="color:var(--color-primary,#ff4d4d);margin-bottom:1rem;">Contact Us</h2>
+      <form class="contact-form" autocomplete="off" style="display:flex;flex-direction:column;gap:1rem;">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <textarea name="message" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+      <div class="contact-info" style="margin-top:1.5rem;color:#333;font-size:0.95rem;">
+        <p><strong>Email:</strong> support@primocustoms.bn</p>
+        <p><strong>Phone:</strong> +673 123 4567</p>
+        <p><strong>Address:</strong> Unit 12, Kg Kiulap, Bandar Seri Begawan, Brunei</p>
       </div>
     </section>
   </main>

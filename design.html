@@ -8,99 +8,135 @@
 </head>
 <body>
   <header>
-    <div class="logo">PRIMOCUSTOMS.BN</div>
+  <a href="index.html" class="logo" style="text-decoration:none;color:inherit;cursor:pointer;">PRIMOCUSTOMS.BN</a>
     <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="shop.html">Shop</a></li>
-        <li><a href="design.html">Custom Design</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="design.html" class="active">Custom Design</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
+    <div class="cart-container">
+      <span id="cartCount">0</span>
+      <img src="icons/cart.png" alt="Cart" style="width:28px;height:28px;filter:brightness(0) invert(1);cursor:pointer;" onclick="toggleCartPreview()">
+      <div id="cartPreview" style="display:none;position:absolute;top:36px;right:0;background:#fff;color:#222;box-shadow:0 4px 16px rgba(0,0,0,0.12);border-radius:8px;min-width:240px;z-index:999;padding:1rem;">
+        <h4 style="margin-top:0;color:#ff4d4d;">Cart Items</h4>
+        <ul id="cartItems" style="list-style:none;padding:0;margin:0;font-size:0.98rem;"></ul>
+        <div id="cartEmpty" style="color:#888;text-align:center;">Cart is empty</div>
+      </div>
+    </div>
     <div class="hamburger" onclick="toggleMenu()">☰</div>
   </header>
-    <h1>Design Your Custom T-Shirt</h1>
+    <main>
 
-   <div class="designer">
-    <!-- T-shirt Preview with Real Image -->
-    <div class="tshirt-preview" id="tshirtPreview">
-      <img id="tshirtImage" src="gildan white.png" class="tshirt-image" alt="T-shirt" />
-      <img id="uploadedImage" class="uploaded-image" />
-    </div>
-
-    <!-- Controls -->
-    <div class="controls">
-      <!-- T-shirt Color Picker -->
-      <div>
-        <label for="color">T-Shirt Color:</label>
-        <select id="color" onchange="changeColor()">
-          <option value="white">White</option>
-          <option value="black">Black</option>
-        </select>
+  <section style="max-width:600px;margin:2.5rem auto 0 auto;background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.10);padding:2.5rem 1.5rem;">
+    <h1 style="color:#ff4d4d;text-align:center;margin-bottom:1.5rem;">Design Your Custom T-Shirt</h1>
+    <div class="designer" style="display:flex;flex-wrap:wrap;gap:2rem;justify-content:center;align-items:flex-start;">
+      <!-- T-shirt Preview with Real Image -->
+      <div class="tshirt-preview" id="tshirtPreview" style="background:#f7f7f7;border-radius:12px;padding:1.2rem;box-shadow:0 2px 8px rgba(0,0,0,0.07);width:260px;min-height:320px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;">
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:260px;position:relative;width:100%;">
+          <img id="tshirtImage" src="gildan white.png" class="tshirt-image" alt="T-shirt" style="width:200px;transition:filter 0.3s;display:block;margin:auto;position:relative;z-index:1;" />
+          <img id="uploadedImage" class="uploaded-image" style="max-width:120px;max-height:120px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.10);display:none;z-index:2;" />
+        </div>
+  <div style="margin-top:0.4rem;text-align:center;color:#888;font-size:0.95em;">Drag your design to position it!</div>
+  <button id="previewLargeBtn" style="margin-top:0;background:#ff4d4d;color:#fff;padding:0.5em 1.2em;border:none;border-radius:8px;font-weight:bold;box-shadow:0 2px 8px rgba(0,0,0,0.07);cursor:pointer;">Preview Large</button>
       </div>
-
-      <!-- Image Upload -->
-      <div>
-        <label for="imageUpload">Upload Your Design:</label>
-        <input type="file" id="imageUpload" accept="image/*" onchange="previewImage(event)" />
+      <!-- Large Preview Modal -->
+      <div id="largePreviewModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.7);z-index:9999;align-items:center;justify-content:center;">
+        <div style="background:#fff;border-radius:16px;padding:2rem;box-shadow:0 8px 32px rgba(0,0,0,0.18);max-width:90vw;max-height:90vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;">
+          <span id="closeLargePreview" style="position:absolute;top:1rem;right:1rem;font-size:2rem;cursor:pointer;color:#ff4d4d;font-weight:bold;">&times;</span>
+          <img id="largeTshirtImage" src="gildan white.png" alt="T-shirt Large" style="width:200px;max-width:200px;transition:filter 0.3s;display:block;margin:auto;position:relative;z-index:1;" />
+          <img id="largeUploadedImage" class="uploaded-image" style="max-width:240px;max-height:240px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,0.10);display:none;z-index:2;" />
+        </div>
       </div>
-
-      <button onclick="resetDesign()">Reset</button>
-
-      <button onclick="saveDesign()">Download Design</button>
-
-      <!-- Back Button -->
-      <button onclick="history.back()">← Back to Home</button>
+      <!-- Controls -->
+      <div class="controls" style="flex:1;min-width:220px;display:flex;flex-direction:column;gap:1.2rem;">
+        <!-- T-shirt Color Picker -->
+        <div>
+          <label for="color" style="font-weight:500;color:#444;">T-Shirt Color:</label>
+          <select id="color" onchange="changeColor()" style="width:100%;padding:0.6em;border-radius:6px;border:1px solid #ccc;margin-top:0.3em;">
+            <option value="white">White</option>
+            <option value="black">Black</option>
+          </select>
+        </div>
+        <!-- Size Selector -->
+        <div>
+          <label for="size" style="font-weight:500;color:#444;">Size:</label>
+          <select id="size" name="size" style="width:100%;padding:0.6em;border-radius:6px;border:1px solid #ccc;margin-top:0.3em;">
+            <option value="XS">XS</option>
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+          </select>
+        </div>
+        <!-- Image Upload -->
+        <div>
+          <label for="imageUpload" style="font-weight:500;color:#444;">Upload Your Design:</label>
+          <input type="file" id="imageUpload" accept="image/*" onchange="previewImage(event)" style="width:100%;padding:0.5em;border-radius:6px;border:1px solid #ccc;margin-top:0.3em;" />
+        </div>
+        <div style="display:flex;gap:0.7em;">
+          <button onclick="resetDesign()" style="background:#eee;color:#222;padding:0.7em 1.2em;border:none;border-radius:8px;font-weight:500;">Reset</button>
+          <button onclick="saveDesign()" style="background:#ff4d4d;color:#fff;padding:0.7em 1.2em;border:none;border-radius:8px;font-weight:bold;box-shadow:0 2px 8px rgba(0,0,0,0.07);">Download Design</button>
+        </div>
+        <button id="addCustomToCart" style="background:#4caf50;color:#fff;padding:0.8em 1.5em;border:none;border-radius:8px;font-weight:bold;font-size:1.1em;box-shadow:0 2px 8px rgba(0,0,0,0.07);margin-top:0.5em;">Add Custom Design to Cart</button>
+        <button onclick="history.back()" style="background:none;color:#ff4d4d;font-weight:bold;border:none;font-size:1.1em;cursor:pointer;margin-top:0.5em;">← Back to Home</button>
+      </div>
     </div>
-  </div>
+  </section>
+  <section style="max-width:600px;margin:2rem auto 0 auto;background:#f9f9f9;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.05);padding:1.5rem 1rem;">
+    <h2 style="color:#222;text-align:center;margin-bottom:1rem;font-size:1.2em;">How It Works</h2>
+    <ol style="color:#555;font-size:1em;line-height:1.7;margin-left:1.2em;">
+      <li>Choose your T-shirt color and size.</li>
+      <li>Upload your design image (PNG/JPG).</li>
+      <li>Drag your design to position it on the shirt preview.</li>
+      <li>Download your design or proceed to order.</li>
+    </ol>
+  </section>
 
   <footer class="footer">
-  <div class="footer-container">
-    
-    <!-- Business Info -->
-    <div class="footer-section">
-      <h3>PrimoCustoms.BN</h3>
-      <p>
-        📍 Unit 12, Kg Kiulap, Bandar Seri Begawan, Brunei<br>
-        📞 +673 123 4567<br>
-        ✉️ support@primocustoms.bn
-      </p>
-    </div>
-
-    <!-- Quick Links -->
-    <div class="footer-section">
-      <h4>Quick Links</h4>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="shop.html">Shop</a></li>
-        <li><a href="design.html">Custom Design</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-      <div class="hamburger" onclick="toggleMenu()">☰</div>
-    </div>
-
-    <!-- Social Media -->
-    <div class="footer-section">
-      <h4>Follow Us</h4>
-      <div class="social-icons">
-        <a href="https://www.instagram.com/" target="_blank">
-          <img src="icons/instagram.png" alt="Instagram">
-        </a>
-        <a href="https://www.tiktok.com/" target="_blank">
-          <img src="icons/tiktok.png" alt="TikTok">
-        </a>
-        <a href="https://www.facebook.com/" target="_blank">
-          <img src="icons/facebook.png" alt="Facebook">
-        </a>
+    <div class="footer-container">
+      <!-- Business Info -->
+      <div class="footer-section">
+        <h3>PrimoCustoms.BN</h3>
+        <p>
+          📍 Unit 12, Kg Kiulap, Bandar Seri Begawan, Brunei<br>
+          📞 +673 123 4567<br>
+          ✉️ support@primocustoms.bn
+        </p>
+      </div>
+      <!-- Quick Links -->
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="shop.html">Shop</a></li>
+          <li><a href="design.html">Custom Design</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <!-- Social Media -->
+      <div class="footer-section">
+        <h4>Follow Us</h4>
+        <div class="social-icons">
+          <a href="https://www.instagram.com/" target="_blank">
+            <img src="icons/instagram.png" alt="Instagram">
+          </a>
+          <a href="https://www.tiktok.com/" target="_blank">
+            <img src="icons/tiktok.png" alt="TikTok">
+          </a>
+          <a href="https://www.facebook.com/" target="_blank">
+            <img src="icons/facebook.png" alt="Facebook">
+          </a>
+        </div>
       </div>
     </div>
-  </div>
-
-  <!-- Bottom Bar -->
-  <div class="footer-bottom">
-    <p>&copy; 2025 PrimoCustoms.BN | All Rights Reserved</p>
-  </div>
-</footer>
+    <!-- Bottom Bar -->
+    <div class="footer-bottom">
+      <p>&copy; 2025 PrimoCustoms.BN | All Rights Reserved</p>
+    </div>
+  </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
